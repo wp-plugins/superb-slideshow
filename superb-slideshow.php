@@ -4,9 +4,11 @@ Plugin Name: Superb Slideshow
 Plugin URI: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Description: Superb Slideshow script that incorporates some of your most requested features all rolled into one. Each instance of a fade in slideshow on the page is completely independent of the other, with support for different features selectively enabled for each slideshow.  
 Author: Gopi.R
-Version: 9.0
+Version: 9.1
 Author URI: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Donate link: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 function sswld_show() 
@@ -80,30 +82,34 @@ function sswld_show()
 	<?php
 }
 
+add_shortcode( 'superb-slideshow', 'sswld_shortcode' );
 
-add_filter('the_content','sswld_show_filter');
-
-function sswld_show_filter($content){
-	return 	preg_replace_callback('/\[superb-slideshow=(.*?)\]/sim','sswld_show_filter_Callback',$content);
-}
-
-function sswld_show_filter_Callback($matches) 
+function sswld_shortcode( $atts ) 
 {
-	 $sswld_package  = "";
+	$sswld_package  = "";
 	$sswld_pp = "";
 	//echo $matches[1];
-	$var = $matches[1];
-	parse_str($var, $output);
+	//$var = $matches[1];
+	//parse_str($var, $output);
 	
-	$filename = $output['filename'];
+	//[superb-slideshow filename="page1.xml" width="400" height="300"]
+	if ( ! is_array( $atts ) )
+	{
+		return '';
+	}
+	$width = $atts['width'];
+	$height = $atts['height'];
+	$filename = $atts['filename'];
+	
+	//$filename = $output['filename'];
 	if($filename==""){$filename = "superb-slideshow-v2.xml";}
 	
-	@$width = @$output['amp;width'];
-	if($width==""){@$width = $output['width'];}
+	//@$width = @$output['amp;width'];
+	//if($width==""){@$width = $output['width'];}
 	if(!is_numeric(@$width)){@$width = 200;} 
 	
-	@$height = @$output['amp;height'];
-	if($height==""){@$height = @$output['height'];}
+	//@$height = @$output['amp;height'];
+	//if($height==""){@$height = @$output['height'];}
 	if(!is_numeric(@$height)){@$height = 200;} 
 	
 	$sswld_siteurl = get_option('siteurl');
@@ -140,8 +146,6 @@ function sswld_show_filter_Callback($matches)
 	
 	$sswld_wrapperid = str_replace(".","_",$filename);
 	$sswld_wrapperid = str_replace("-","_",$sswld_wrapperid);
-	//$sswld_pp = $sswld_pp . '<script type="text/javascript" src="'. $sswld_pluginurl.'inc/jquery.min.js"><script>';
-	//$sswld_pp = $sswld_pp . '<script type="text/javascript" src="'.$sswld_pluginurl.'inc/superb-slideshow.js"><script>';
 	$sswld_pp = $sswld_pp . '<script type="text/javascript">';
 	$sswld_pp = $sswld_pp . 'var sswldgallery=new sswldSlideShow({sswld_wrapperid: "'.$sswld_wrapperid.'", sswld_dimensions: ['.$sswld_width.', '. $sswld_height.'], sswld_imagearray: ['. $sswld_package.'],sswld_displaymode: {type:"auto", pause:'.$sswld_pause.', cycles:'. $sswld_cycles.', wraparound:false},sswld_persist: false, sswld_fadeduration: "'.$sswld_duration.'", sswld_descreveal: "'.$sswld_displaydesc.'",sswld_togglerid: ""})';
 	$sswld_pp = $sswld_pp . '</script>';
@@ -262,52 +266,14 @@ function sswld_admin_option()
 	?>
 	</td><td align="left" valign="top">  </td></tr></table>
 	</form>
-    <hr />
-    <b style="color:#FF0000;">If Image not display, go and check the image path in XML file (Use full image url).</b>
-	<h2>We can use this plug-in in three different way.</h2>
-	1.	Go to widget menu and drag and drop the "Superb Slideshow" widget to your sidebar location. or <br />
-	2.	Copy and past the below mentioned code to your desired template location.<br />
-	3.	Past the given code to post or page.
-    <h2>Paste the below code to your desired template location</h2>
-    <div style="padding-top:7px;padding-bottom:7px;">
-    <code style="padding:7px;">
-    &lt;?php if (function_exists (sswld_show)) sswld_show(); ?&gt;
-    </code></div>
-	<h2>Use below code in post or page</h2>
-	<div style="padding-top:7px;padding-bottom:7px;">
-    <code style="padding:7px;">
-    [superb-slideshow=filename=page1.xml&width=400&height=300]
-    </code></div>
-	filename = page1.xml<br />
-	This is the name of the XML file gallery, this xml file should be available in plugin forder.<br />
-	width = 400	<br />
-	This is width of the gallery.<br />
-	height = 300<br />
-	This is the height of the gallery.
-
-	<h2>How to add more image?</h2>
-	1. Upload your images into "wp-content/plugins/vertical-carousel-slideshow/images/ " or any where.<br />
-	2. Take the "superb-slideshow.xml" XML file from plugin folder.<br />
-	3. Create new image node like below (add imagepath,link,title,target).<br />
-	3. You can use full image path also.<br />
-	<em>This is only for widget, to create new gallery create new XML file and use above code in post or page</em>	<br /><br /><br />
-	<code>
-		&lt;image&gt;<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;	&lt;path&gt;http://www.sitename.com/wp-content/plugins/superb-slideshow/images/gSlide11.jpg&lt;/path&gt;<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;	&lt;target&gt;_new&lt;/target&gt;<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;	&lt;title&gt;Click to see Superb Slideshow demo&lt;/title&gt;<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;	&lt;link&gt;http://gopi.coolpage.biz/demo/&lt;/link&gt;<br>
-		&lt;/image&gt;
-	</code>
-	<h2>Requirements/Restrictions</h2>
-	1.Works with Wordpress 3.0+	<br />
-	2.PHP 4.5+ or above with dom library support.	<br />
-	&nbsp;&nbsp;See your phpinfo file to see DOM/XML enabled or not.	<br />
-	&nbsp;&nbsp;To work this plugin DOM/XML should be in enabled mode(mostly this will be in enabled mode, so no problem).<br />
-	3.Take this file superb-slideshow/inc/superb-slideshow.js and goto 3rd line and replace the image path with full URL.
-    <h2>About Plugin</h2>
-    Plug-in created by <a target="_blank" href='http://www.gopiplus.com/work/2010/07/18/superb-slideshow/'>www.gopiplus.com</a><br />
-	Check official website for more info <a target="_blank" href='http://www.gopiplus.com/work/2010/07/18/superb-slideshow/'>www.gopiplus.com</a><br />    </p>
+	<br />
+	<strong>Plugin configuration</strong>
+	<ul>
+		<li>Option 1. Drag and drop the widget</li>
+		<li>Option 2. Paste the below code to your desired template location</li>
+		<li>Option 3. Use plugin short code in posts and pages</li>
+	</ul>
+	Check official website for more information <a target="_blank" href='http://www.gopiplus.com/work/2010/07/18/superb-slideshow/'>click here</a>
 	<?php
 	echo "</div>";
 }

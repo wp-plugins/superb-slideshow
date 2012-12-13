@@ -4,7 +4,7 @@ Plugin Name: Superb Slideshow
 Plugin URI: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Description: Superb Slideshow script that incorporates some of your most requested features all rolled into one. Each instance of a fade in slideshow on the page is completely independent of the other, with support for different features selectively enabled for each slideshow.  
 Author: Gopi.R
-Version: 9.1
+Version: 9.2
 Author URI: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Donate link: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 License: GPLv2 or later
@@ -326,7 +326,7 @@ function sswld_add_javascript_files()
 {
 	if (!is_admin())
 	{
-		wp_enqueue_script( 'jquery.min', get_option('siteurl').'/wp-content/plugins/superb-slideshow/inc/jquery.min.js');
+		wp_enqueue_script( 'jquery');
 		wp_enqueue_script( 'superb-slideshow', get_option('siteurl').'/wp-content/plugins/superb-slideshow/inc/superb-slideshow.js');
 	}
 }    

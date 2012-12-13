@@ -5,8 +5,8 @@ Author URI: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Plugin URI: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Tags: Superb, Slideshow
 Requires at least: 3.0
-Tested up to: 3.4.2
-Stable tag: 9.1
+Tested up to: 3.5
+Stable tag: 9.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	
@@ -111,6 +111,11 @@ More info : [click to go](http://www.gopiplus.com/work/2010/07/18/superb-slidesh
 
 == Upgrade Notice ==
 
+= 9.2 =
+Tested up to 3.5
+Avoid registering the alternate jQuery.
+From this version we are using existing wordpress jQuery.
+
 = 9.1 =
 Tested up to 3.4.2
 
@@ -146,6 +151,11 @@ Create the new XML file in plugin directry, and use mentioned code.
 first version
 
 == Changelog ==
+
+= 9.2 =
+Tested up to 3.5
+Avoid registering the alternate jQuery.
+From this version we are using existing wordpress jQuery.
 
 = 9.1 =
 Tested up to 3.4.2

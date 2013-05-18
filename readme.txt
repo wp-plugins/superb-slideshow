@@ -4,9 +4,9 @@ Donate link: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Author URI: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Plugin URI: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Tags: Superb, Slideshow
-Requires at least: 3.0
-Tested up to: 3.5
-Stable tag: 9.2
+Requires at least: 3.4
+Tested up to: 3.6
+Stable tag: 10.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	
@@ -59,23 +59,6 @@ We can use this plug-in in different way.
 
 3. Use the below code to the page or post
 	
-<code>[superb-slideshow=filename=page1.xml&width=400&height=300]</code>
-	
-filename = page1.xml		
-		
-This is the name of the XML file gallery, this xml file should be available in plugin forder.		
-	
-width = 400			
-		
-This is width of the gallery.			
-		
-height = 300			
-	
-This is the height of the gallery.			
-		
-See the live demo !		
-
-To see my all plugin : [click to go](http://www.gopiplus.com/work/2010/07/18/superb-slideshow/)	
 More info : [click to go](http://www.gopiplus.com/work/2010/07/18/superb-slideshow/)
 	
 == Installation ==	
@@ -110,6 +93,9 @@ More info : [click to go](http://www.gopiplus.com/work/2010/07/18/superb-slidesh
 2. Admin setting screen http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 
 == Upgrade Notice ==
+
+= 10.0 =
+Tested up to 3.6
 
 = 9.2 =
 Tested up to 3.5
@@ -151,6 +137,9 @@ Create the new XML file in plugin directry, and use mentioned code.
 first version
 
 == Changelog ==
+
+= 10.0 =
+Tested up to 3.6
 
 = 9.2 =
 Tested up to 3.5

@@ -4,7 +4,7 @@ Plugin Name: Superb Slideshow
 Plugin URI: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Description: Superb Slideshow script that incorporates some of your most requested features all rolled into one. Each instance of a fade in slideshow on the page is completely independent of the other, with support for different features selectively enabled for each slideshow.  
 Author: Gopi.R
-Version: 10.0
+Version: 10.1
 Author URI: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Donate link: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 License: GPLv2 or later
@@ -181,107 +181,124 @@ function sswld_widget($args)
 
 function sswld_admin_option() 
 {
-	echo "<div class='wrap'>";
-	echo "<h2>"; 
-	echo "Superb Slideshow";
-	echo "</h2>";
-    
-	
-	$sswld_xml_file = get_option('sswld_xml_file');
-	$sswld_random = get_option('sswld_random');
-	$sswld_title = get_option('sswld_title');
-	$sswld_dir = get_option('sswld_dir');
-	$sswld_width = get_option('sswld_width');
-	$sswld_height = get_option('sswld_height');
-	$sswld_pause = get_option('sswld_pause');
-	
-	$sswld_duration = get_option('sswld_duration');
-	$sswld_cycles = get_option('sswld_cycles');
-	$sswld_displaydesc = get_option('sswld_displaydesc');
-	
-	if (@$_POST['sswld_submit']) 
-	{
-		$sswld_xml_file = stripslashes($_POST['sswld_xml_file']);
-		$sswld_random = stripslashes($_POST['sswld_random']);		
-		$sswld_title = stripslashes($_POST['sswld_title']);
-		$sswld_dir = stripslashes(@$_POST['sswld_dir']);
-		$sswld_width = stripslashes($_POST['sswld_width']);
-		$sswld_height = stripslashes($_POST['sswld_height']);
-		$sswld_pause = stripslashes($_POST['sswld_pause']);
-		
-		$sswld_duration = stripslashes($_POST['sswld_duration']);
-		$sswld_cycles = stripslashes($_POST['sswld_cycles']);
-		$sswld_displaydesc = stripslashes($_POST['sswld_displaydesc']);
-		
-		update_option('sswld_xml_file', $sswld_xml_file );
-		update_option('sswld_random', $sswld_random );
-		update_option('sswld_title', $sswld_title );
-		update_option('sswld_dir', $sswld_dir );
-		update_option('sswld_width', $sswld_width );
-		update_option('sswld_height', $sswld_height );
-		update_option('sswld_pause', $sswld_pause );
-		
-		update_option('sswld_duration', $sswld_duration );
-		update_option('sswld_cycles', $sswld_cycles );
-		update_option('sswld_displaydesc', $sswld_displaydesc );
-	}
 	?>
-	<form name="sswld_form" method="post" action="">
-	<table width="100%" border="0" cellspacing="0" cellpadding="3"><tr><td align="left">
+	<div class="wrap">
+	  <div class="form-wrap">
+		<div id="icon-edit" class="icon32 icon32-posts-post"></div>
+		<h2>Superb Slideshow</h2>
+		<?php
+		$sswld_xml_file = get_option('sswld_xml_file');
+		$sswld_random = get_option('sswld_random');
+		$sswld_title = get_option('sswld_title');
+		$sswld_dir = get_option('sswld_dir');
+		$sswld_width = get_option('sswld_width');
+		$sswld_height = get_option('sswld_height');
+		$sswld_pause = get_option('sswld_pause');
+		$sswld_duration = get_option('sswld_duration');
+		$sswld_cycles = get_option('sswld_cycles');
+		$sswld_displaydesc = get_option('sswld_displaydesc');
+		
+		if (isset($_POST['sswld_form_submit']) && $_POST['sswld_form_submit'] == 'yes')
+		{
+			//	Just security thingy that wordpress offers us
+			check_admin_referer('sswld_form_setting');
+			
+			$sswld_xml_file = stripslashes($_POST['sswld_xml_file']);
+			$sswld_random = stripslashes($_POST['sswld_random']);		
+			$sswld_title = stripslashes($_POST['sswld_title']);
+			$sswld_dir = stripslashes($_POST['sswld_dir']);
+			$sswld_width = stripslashes($_POST['sswld_width']);
+			$sswld_height = stripslashes($_POST['sswld_height']);
+			$sswld_pause = stripslashes($_POST['sswld_pause']);
+			$sswld_duration = stripslashes($_POST['sswld_duration']);
+			$sswld_cycles = stripslashes($_POST['sswld_cycles']);
+			$sswld_displaydesc = stripslashes($_POST['sswld_displaydesc']);
+			
+			update_option('sswld_xml_file', $sswld_xml_file );
+			update_option('sswld_random', $sswld_random );
+			update_option('sswld_title', $sswld_title );
+			update_option('sswld_dir', $sswld_dir );
+			update_option('sswld_width', $sswld_width );
+			update_option('sswld_height', $sswld_height );
+			update_option('sswld_pause', $sswld_pause );
+			update_option('sswld_duration', $sswld_duration );
+			update_option('sswld_cycles', $sswld_cycles );
+			update_option('sswld_displaydesc', $sswld_displaydesc );
+			
+			?>
+			<div class="updated fade">
+				<p><strong>Details successfully updated.</strong></p>
+			</div>
+			<?php
+		}
+		?>
+		<h3>Plugin setting</h3>
+		<form name="sswld_form" method="post" action="#">
+		
+			<label for="tag-title">XML File (Only for widget)</label>
+			<input name="sswld_xml_file" type="text" value="<?php echo $sswld_xml_file; ?>"  id="sswld_xml_file" size="70" maxlength="200">
+			<p>Please enter your slideshow XML filename.</p>
+			
+			<label for="tag-title">Random</label>
+			<select name="sswld_random" id="sswld_random">
+				<option value='Y' <?php if($sswld_random == 'Y') { echo "selected='selected'" ; } ?>>Yes</option>
+				<option value='N' <?php if($sswld_random == 'N') { echo "selected='selected'" ; } ?>>No</option>
+			</select>
+			<p>Please select random display option.</p>
+			
+			<label for="tag-title">Title (Only for widget)</label>
+			<input name="sswld_title" type="text" value="<?php echo $sswld_title; ?>"  id="sswld_title" size="70" maxlength="200">
+			<p>Please enter widget title. </p>
+			
+			<label for="tag-title">Width (Only for widget)</label>
+			<input name="sswld_width" type="text" value="<?php echo $sswld_width; ?>"  id="sswld_width" maxlength="4">
+			<p>Please enter your slideshow width. This is only for widget option. (Example: 175) </p>
+			
+			<label for="tag-title">Height (Only for widget)</label>
+			<input name="sswld_height" type="text" value="<?php echo $sswld_height; ?>"  id="sswld_height" maxlength="4">
+			<p>Please enter your slideshow height. This is only for widget option. (Example: 150) </p>
+			
+			<label for="tag-title">Pause</label>
+			<input name="sswld_pause" type="text" value="<?php echo $sswld_pause; ?>"  id="sswld_pause" maxlength="6">
+			<p>Please enter pause between slides. (Example: 2500)</p>
+			
+			<label for="tag-title">Fade duration</label>
+			<input name="sswld_duration" type="text" value="<?php echo $sswld_duration; ?>"  id="sswld_duration" maxlength="6">
+			<p>Please enter your fade duration. The duration of the fade effect when transitioning from one image to the next, in milliseconds. (Example: 500)</p>
+			
+			<label for="tag-title">Cycles</label>
+			<input name="sswld_cycles" type="text" value="<?php echo $sswld_cycles; ?>"  id="sswld_cycles" maxlength="1">
+			<p>The cycles option when set to 0 will cause the slideshow to rotate perpetually, <br />While any number larger than 0 means it will stop after N cycles. (Example: 0)</p>
+			
+			<label for="tag-title">Display description</label>
+			<select name="sswld_displaydesc" id="sswld_displaydesc">
+				<option value='ondemand' <?php if($sswld_displaydesc == 'ondemand') { echo "selected='selected'" ; } ?>>On Demand</option>
+				<option value='always' <?php if($sswld_displaydesc == 'always') { echo "selected='selected'" ; } ?>>Always</option>
+			</select>
+			<p>On Demand = Show description when the user mouses over the slideshow. <br />Always = Always show description panel at the foot of the slideshow.</p>
+		
+			<div style="height:10px;"></div>
+			<input type="hidden" name="sswld_form_submit" value="yes"/>
+			<input name="sswld_submit" id="sswld_submit" class="button" value="Submit" type="submit" />
+			<a class="button" target="_blank" href="http://www.gopiplus.com/work/2010/07/18/superb-slideshow/">Help</a>
+			<?php wp_nonce_field('sswld_form_setting'); ?>
+		</form>
+		</div>
+		<h3>Plugin configuration option</h3>
+		<ol>
+			<li>Drag and drop the widget to your sidebar.</li>
+			<li>Add directly in to the theme using PHP code.</li>
+			<li>Add the plugin in the posts or pages using short code.</li>
+		</ol>
+	<p class="description">Check official website for more information <a target="_blank" href="http://www.gopiplus.com/work/2010/07/18/superb-slideshow/">click here</a></p>
+	</div>
 	<?php
-	echo '<p>XML File:<br><input  style="width: 200px;" maxlength="500" type="text" value="';
-	echo $sswld_xml_file . '" name="sswld_xml_file" id="sswld_xml_file" /><br>(Enter Name of the XML file, If You have updated the plugin from 3.0 to 4.0 then use your xml file name or enter "superb-slideshow.xml")</p>';
-
-	echo '<p>Random:<br><input  style="width: 100px;" maxlength="1" type="text" value="';
-	echo $sswld_random . '" name="sswld_random" id="sswld_random" />(Y/N)</p>';
-
-	echo '<p>Title:<br><input  style="width: 200px;" maxlength="200" type="text" value="';
-	echo $sswld_title . '" name="sswld_title" id="sswld_title" /></p>';
-	
-	echo '<p>Width:<br><input  style="width: 100px;" maxlength="4" type="text" value="';
-	echo $sswld_width . '" name="sswld_width" id="sswld_width" />Only Number, This not for page and post gallery.</p>';
-	
-	echo '<p>Height:<br><input  style="width: 100px;" maxlength="4" type="text" value="';
-	echo $sswld_height . '" name="sswld_height" id="sswld_height" />Only Number, This not for page and post gallery.</p>';
-	
-	echo '<p>Pause:<br><input maxlength="4" style="width: 100px;" type="text" value="';
-	echo $sswld_pause . '" name="sswld_pause" id="sswld_pause" />Only Number<br>';
-	echo 'Pause between slides</p>';
-	
-	echo '<p>Fade Duration:<br><input maxlength="4" style="width: 100px;" type="text" value="';
-	echo $sswld_duration . '" name="sswld_duration" id="sswld_duration" />Only Number<br>';
-	echo 'The duration of the fade effect when transitioning from one image to the next, in milliseconds.</p>';
-	
-	echo '<p>Cycles:<br><input maxlength="1" style="width: 100px;" type="text" value="';
-	echo $sswld_cycles . '" name="sswld_cycles" id="sswld_cycles" />Only Number<br>';
-	echo 'The cycles option when set to 0 will cause the slideshow to rotate perpetually,';
-	echo 'while any number larger than 0 means it will stop after N cycles.</p>';
-
-	echo '<p>Display Description:<br><input maxlength="10" style="width: 100px;" type="text" value="';
-	echo $sswld_displaydesc . '" name="sswld_displaydesc" id="sswld_displaydesc" />always/ondemand<br>';
-	echo 'ondemand = Show description when the user mouses over the slideshow.<br>';
-	echo 'always = Always show description panel at the foot of the slideshow.<br></p>';
-
-	echo '<input name="sswld_submit" id="sswld_submit" class="button-primary" value="Submit" type="submit" />';
-	?>
-	</td><td align="left" valign="top">  </td></tr></table>
-	</form>
-	<br />
-	<strong>Plugin configuration</strong>
-	<ul>
-		<li>Option 1. Drag and drop the widget</li>
-		<li>Option 2. Paste the below code to your desired template location</li>
-		<li>Option 3. Use plugin short code in posts and pages</li>
-	</ul>
-	Check official website for more information <a target="_blank" href='http://www.gopiplus.com/work/2010/07/18/superb-slideshow/'>click here</a>
-	<?php
-	echo "</div>";
 }
 
 function sswld_control()
 {
 	echo '<p>Superb Slideshow.<br> To change the setting goto Superb Slideshow link under Setting menu.';
-	echo ' <a href="options-general.php?page=superb-slideshow/superb-slideshow.php">';
+	echo ' <a href="options-general.php?page=superb-slideshow">';
 	echo 'click here</a></p>';
 }
 
@@ -314,7 +331,7 @@ function sswld_deactivation()
 
 function sswld_add_to_menu() 
 {
-	add_options_page('Superb Slideshow','Superb Slideshow','manage_options',__FILE__,'sswld_admin_option');  
+	add_options_page('Superb Slideshow','Superb Slideshow','manage_options', 'superb-slideshow','sswld_admin_option');  
 }
 
 if (is_admin()) 

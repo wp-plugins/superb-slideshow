@@ -1,0 +1,143 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Superb Slideshow\n"
+"POT-Creation-Date: 2014-02-08 23:08+0800\n"
+"PO-Revision-Date: 2014-02-08 23:08+0800\n"
+"Last-Translator: \n"
+"Language-Team: www.gopiplus.com <www.gopiplus.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../superb-slideshow.php:89 ../superb-slideshow.php:160
+msgid "Image XML file not available."
+msgstr ""
+
+#: ../superb-slideshow.php:195 ../superb-slideshow.php:309
+#: ../superb-slideshow.php:319 ../superb-slideshow.php:323
+#: ../superb-slideshow.php:343
+msgid "Superb Slideshow"
+msgstr ""
+
+#: ../superb-slideshow.php:237
+msgid "Details successfully updated."
+msgstr ""
+
+#: ../superb-slideshow.php:242
+msgid "Plugin setting"
+msgstr ""
+
+#: ../superb-slideshow.php:245
+msgid "XML File (Only for widget)"
+msgstr ""
+
+#: ../superb-slideshow.php:247
+msgid "Please enter your slideshow XML filename."
+msgstr ""
+
+#: ../superb-slideshow.php:249
+msgid "Random"
+msgstr ""
+
+#: ../superb-slideshow.php:254
+msgid "Please select random display option."
+msgstr ""
+
+#: ../superb-slideshow.php:256
+msgid "Title (Only for widget)"
+msgstr ""
+
+#: ../superb-slideshow.php:258
+msgid "Please enter widget title."
+msgstr ""
+
+#: ../superb-slideshow.php:260
+msgid "Width (Only for widget)"
+msgstr ""
+
+#: ../superb-slideshow.php:262
+msgid "Please enter your slideshow width. This is only for widget option."
+msgstr ""
+
+#: ../superb-slideshow.php:264
+msgid "Height (Only for widget)"
+msgstr ""
+
+#: ../superb-slideshow.php:266
+msgid "Please enter your slideshow height. This is only for widget option."
+msgstr ""
+
+#: ../superb-slideshow.php:268
+msgid "Pause"
+msgstr ""
+
+#: ../superb-slideshow.php:270
+msgid "Please enter pause between slides."
+msgstr ""
+
+#: ../superb-slideshow.php:272
+msgid "Fade duration"
+msgstr ""
+
+#: ../superb-slideshow.php:274
+msgid ""
+"Please enter your fade duration. The duration of the fade effect when "
+"transitioning from one image to the next, in milliseconds."
+msgstr ""
+
+#: ../superb-slideshow.php:276
+msgid "Cycles"
+msgstr ""
+
+#: ../superb-slideshow.php:278
+msgid ""
+"The cycles option when set to 0 will cause the slideshow to rotate "
+"perpetually, <br />While any number larger than 0 means it will stop after N "
+"cycles."
+msgstr ""
+
+#: ../superb-slideshow.php:280
+msgid "Display description"
+msgstr ""
+
+#: ../superb-slideshow.php:285
+msgid ""
+"On Demand = Show description when the user mouses over the slideshow. <br /"
+">Always = Always show description panel at the foot of the slideshow."
+msgstr ""
+
+#: ../superb-slideshow.php:289
+msgid "Submit"
+msgstr ""
+
+#: ../superb-slideshow.php:290
+msgid "Help"
+msgstr ""
+
+#: ../superb-slideshow.php:294
+msgid "Plugin configuration option"
+msgstr ""
+
+#: ../superb-slideshow.php:296
+msgid "Drag and drop the widget to your sidebar."
+msgstr ""
+
+#: ../superb-slideshow.php:297
+msgid "Add directly in to the theme using PHP code."
+msgstr ""
+
+#: ../superb-slideshow.php:298
+msgid "Add the plugin in the posts or pages using short code."
+msgstr ""
+
+#: ../superb-slideshow.php:300 ../superb-slideshow.php:311
+msgid "Check official website for more information"
+msgstr ""
+
+#: ../superb-slideshow.php:301 ../superb-slideshow.php:312
+msgid "click here"
+msgstr ""

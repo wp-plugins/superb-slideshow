@@ -4,7 +4,7 @@ Plugin Name: Superb Slideshow
 Plugin URI: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Description: Superb Slideshow script that incorporates some of your most requested features all rolled into one. Each instance of a fade in slideshow on the page is completely independent of the other, with support for different features selectively enabled for each slideshow.  
 Author: Gopi.R
-Version: 10.1
+Version: 10.2
 Author URI: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Donate link: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 License: GPLv2 or later
@@ -35,51 +35,59 @@ function sswld_show()
 	if(!is_numeric($sswld_duration)){$sswld_duration = 500;}
 	if(!is_numeric($sswld_cycles)){$sswld_cycles = 0;}
 	
-	$doc = new DOMDocument();
-	$doc->load( $sswld_pluginurl . $sswld_xml_file );
-	$images = $doc->getElementsByTagName( "image" );
-	foreach( $images as $image )
+	$content = @file_get_contents($sswld_pluginurl . $sswld_xml_file);
+	if (strpos($http_response_header[0], "200")) 
 	{
-	  $paths = $image->getElementsByTagName( "path" );
-	  $path = $paths->item(0)->nodeValue;
-	  $targets = $image->getElementsByTagName( "target" );
-	  $target = $targets->item(0)->nodeValue;
-	  $titles = $image->getElementsByTagName( "title" );
-	  $title = $titles->item(0)->nodeValue;
-	  $links = $image->getElementsByTagName( "link" );
-	  $link = $links->item(0)->nodeValue;
-	  $sswld_package = $sswld_package .'["'.$path.'", "'.$link.'", "'.$target.'", "'.$title.'"],';
+		$doc = new DOMDocument();
+		$doc->load( $sswld_pluginurl . $sswld_xml_file );
+		$images = $doc->getElementsByTagName( "image" );
+		foreach( $images as $image )
+		{
+		  $paths = $image->getElementsByTagName( "path" );
+		  $path = $paths->item(0)->nodeValue;
+		  $targets = $image->getElementsByTagName( "target" );
+		  $target = $targets->item(0)->nodeValue;
+		  $titles = $image->getElementsByTagName( "title" );
+		  $title = $titles->item(0)->nodeValue;
+		  $links = $image->getElementsByTagName( "link" );
+		  $link = $links->item(0)->nodeValue;
+		  $sswld_package = $sswld_package .'["'.$path.'", "'.$link.'", "'.$target.'", "'.$title.'"],';
+		}
+		$sswld_random = get_option('sswld_random');
+		if($sswld_random==""){$sswld_random = "Y";}
+		if($sswld_random=="Y")
+		{
+			$sswld_package = explode("[", $sswld_package);
+			shuffle($sswld_package);
+			$sswld_package = implode("[", $sswld_package);
+			$sswld_package = '[' . $sswld_package;
+			$sswld_package = explode("[[", $sswld_package);
+			$sswld_package = implode("[", $sswld_package); // ugly hack to get rid of stray [[
+		}
+		
+		$sswld_package = substr($sswld_package,0,(strlen($sswld_package)-1));
+		?>
+		<script type="text/javascript">
+		var sswldgallery=new sswldSlideShow({
+			sswld_wrapperid: "sswld", //Unique ID of blank DIV on page to house Slideshow
+			sswld_dimensions: [<?php echo $sswld_width; ?>, <?php echo $sswld_height; ?>], //width, height of gallery in pixels. Should reflect dimensions of largest image
+			sswld_imagearray: [<?php echo $sswld_package; ?>],
+			sswld_displaymode: {type:'auto', pause:<?php echo $sswld_pause; ?>, cycles:<?php echo $sswld_cycles; ?>, wraparound:false},
+			sswld_persist: false, //remember last viewed slide and recall within same session?
+			sswld_fadeduration: <?php echo $sswld_duration; ?>, //transition duration (milliseconds)
+			sswld_descreveal: "<?php echo $sswld_displaydesc; ?>",
+			sswld_togglerid: ""
+		})
+		</script>
+		<div style="padding-top:5px;"></div>
+		<div id="sswld"></div>
+		<div style="padding-top:5px;"></div>
+		<?php
 	}
-	$sswld_random = get_option('sswld_random');
-	if($sswld_random==""){$sswld_random = "Y";}
-	if($sswld_random=="Y")
+	else
 	{
-		$sswld_package = explode("[", $sswld_package);
-		shuffle($sswld_package);
-		$sswld_package = implode("[", $sswld_package);
-		$sswld_package = '[' . $sswld_package;
-		$sswld_package = explode("[[", $sswld_package);
-		$sswld_package = implode("[", $sswld_package); // ugly hack to get rid of stray [[
+		_e('Image XML file not available.', 'superb-slideshow');
 	}
-	
-	$sswld_package = substr($sswld_package,0,(strlen($sswld_package)-1));
-	?>
-	<script type="text/javascript">
-	var sswldgallery=new sswldSlideShow({
-		sswld_wrapperid: "sswld", //Unique ID of blank DIV on page to house Slideshow
-		sswld_dimensions: [<?php echo $sswld_width; ?>, <?php echo $sswld_height; ?>], //width, height of gallery in pixels. Should reflect dimensions of largest image
-		sswld_imagearray: [<?php echo $sswld_package; ?>],
-		sswld_displaymode: {type:'auto', pause:<?php echo $sswld_pause; ?>, cycles:<?php echo $sswld_cycles; ?>, wraparound:false},
-		sswld_persist: false, //remember last viewed slide and recall within same session?
-		sswld_fadeduration: <?php echo $sswld_duration; ?>, //transition duration (milliseconds)
-		sswld_descreveal: "<?php echo $sswld_displaydesc; ?>",
-		sswld_togglerid: ""
-	})
-	</script>
-	<div style="padding-top:5px;"></div>
-	<div id="sswld"></div>
-	<div style="padding-top:5px;"></div>
-	<?php
 }
 
 add_shortcode( 'superb-slideshow', 'sswld_shortcode' );
@@ -88,10 +96,7 @@ function sswld_shortcode( $atts )
 {
 	$sswld_package  = "";
 	$sswld_pp = "";
-	//echo $matches[1];
-	//$var = $matches[1];
-	//parse_str($var, $output);
-	
+
 	//[superb-slideshow filename="page1.xml" width="400" height="300"]
 	if ( ! is_array( $atts ) )
 	{
@@ -104,14 +109,8 @@ function sswld_shortcode( $atts )
 	//$filename = $output['filename'];
 	if($filename==""){$filename = "superb-slideshow-v2.xml";}
 	
-	//@$width = @$output['amp;width'];
-	//if($width==""){@$width = $output['width'];}
-	if(!is_numeric(@$width)){@$width = 200;} 
-	
-	//@$height = @$output['amp;height'];
-	//if($height==""){@$height = @$output['height'];}
-	if(!is_numeric(@$height)){@$height = 200;} 
-	
+	if(!is_numeric($width)){$width = 200;} 
+	if(!is_numeric($height)){$height = 200;} 
 	$sswld_siteurl = get_option('siteurl');
 	$sswld_pluginurl = $sswld_siteurl . "/wp-content/plugins/superb-slideshow/";
 	
@@ -127,31 +126,39 @@ function sswld_shortcode( $atts )
 	if(!is_numeric($sswld_duration)){$sswld_duration = 500;}
 	if(!is_numeric($sswld_cycles)){$sswld_cycles = 0;}
 	
-	$doc = new DOMDocument();
-	$doc->load( $sswld_pluginurl . $filename );
-	$images = $doc->getElementsByTagName( "image" );
-	foreach( $images as $image )
+	$content = @file_get_contents($sswld_pluginurl . $filename);
+	if (strpos($http_response_header[0], "200")) 
 	{
-	  $paths = $image->getElementsByTagName( "path" );
-	  $path = $paths->item(0)->nodeValue;
-	  $targets = $image->getElementsByTagName( "target" );
-	  $target = $targets->item(0)->nodeValue;
-	  $titles = $image->getElementsByTagName( "title" );
-	  $title = $titles->item(0)->nodeValue;
-	  $links = $image->getElementsByTagName( "link" );
-	  $link = $links->item(0)->nodeValue;
-	  $sswld_package = $sswld_package .'["'.$path.'", "'.$link.'", "'.$target.'", "'.$title.'"],';
+		$doc = new DOMDocument();
+		$doc->load( $sswld_pluginurl . $filename );
+		$images = $doc->getElementsByTagName( "image" );
+		foreach( $images as $image )
+		{
+		  $paths = $image->getElementsByTagName( "path" );
+		  $path = $paths->item(0)->nodeValue;
+		  $targets = $image->getElementsByTagName( "target" );
+		  $target = $targets->item(0)->nodeValue;
+		  $titles = $image->getElementsByTagName( "title" );
+		  $title = $titles->item(0)->nodeValue;
+		  $links = $image->getElementsByTagName( "link" );
+		  $link = $links->item(0)->nodeValue;
+		  $sswld_package = $sswld_package .'["'.$path.'", "'.$link.'", "'.$target.'", "'.$title.'"],';
+		}
+		$sswld_package = substr($sswld_package,0,(strlen($sswld_package)-1));
+		
+		$sswld_wrapperid = str_replace(".","_",$filename);
+		$sswld_wrapperid = str_replace("-","_",$sswld_wrapperid);
+		$sswld_pp = $sswld_pp . '<script type="text/javascript">';
+		$sswld_pp = $sswld_pp . 'var sswldgallery=new sswldSlideShow({sswld_wrapperid: "'.$sswld_wrapperid.'", sswld_dimensions: ['.$sswld_width.', '. $sswld_height.'], sswld_imagearray: ['. $sswld_package.'],sswld_displaymode: {type:"auto", pause:'.$sswld_pause.', cycles:'. $sswld_cycles.', wraparound:false},sswld_persist: false, sswld_fadeduration: "'.$sswld_duration.'", sswld_descreveal: "'.$sswld_displaydesc.'",sswld_togglerid: ""})';
+		$sswld_pp = $sswld_pp . '</script>';
+		$sswld_pp = $sswld_pp . '<div style="padding-top:5px;"></div>';
+		$sswld_pp = $sswld_pp . '<div id="'.$sswld_wrapperid.'"></div>';
+		$sswld_pp = $sswld_pp . '<div style="padding-top:5px;"></div>';
 	}
-	$sswld_package = substr($sswld_package,0,(strlen($sswld_package)-1));
-	
-	$sswld_wrapperid = str_replace(".","_",$filename);
-	$sswld_wrapperid = str_replace("-","_",$sswld_wrapperid);
-	$sswld_pp = $sswld_pp . '<script type="text/javascript">';
-	$sswld_pp = $sswld_pp . 'var sswldgallery=new sswldSlideShow({sswld_wrapperid: "'.$sswld_wrapperid.'", sswld_dimensions: ['.$sswld_width.', '. $sswld_height.'], sswld_imagearray: ['. $sswld_package.'],sswld_displaymode: {type:"auto", pause:'.$sswld_pause.', cycles:'. $sswld_cycles.', wraparound:false},sswld_persist: false, sswld_fadeduration: "'.$sswld_duration.'", sswld_descreveal: "'.$sswld_displaydesc.'",sswld_togglerid: ""})';
-	$sswld_pp = $sswld_pp . '</script>';
-	$sswld_pp = $sswld_pp . '<div style="padding-top:5px;"></div>';
-	$sswld_pp = $sswld_pp . '<div id="'.$sswld_wrapperid.'"></div>';
-	$sswld_pp = $sswld_pp . '<div style="padding-top:5px;"></div>';
+	else
+	{
+		$sswld_pp = __('Image XML file not available.', 'superb-slideshow');
+	}
 	return $sswld_pp;
 }
 
@@ -185,12 +192,12 @@ function sswld_admin_option()
 	<div class="wrap">
 	  <div class="form-wrap">
 		<div id="icon-edit" class="icon32 icon32-posts-post"></div>
-		<h2>Superb Slideshow</h2>
+		<h2><?php _e('Superb Slideshow', 'superb-slideshow'); ?></h2>
 		<?php
 		$sswld_xml_file = get_option('sswld_xml_file');
 		$sswld_random = get_option('sswld_random');
 		$sswld_title = get_option('sswld_title');
-		$sswld_dir = get_option('sswld_dir');
+		//$sswld_dir = get_option('sswld_dir');
 		$sswld_width = get_option('sswld_width');
 		$sswld_height = get_option('sswld_height');
 		$sswld_pause = get_option('sswld_pause');
@@ -206,7 +213,7 @@ function sswld_admin_option()
 			$sswld_xml_file = stripslashes($_POST['sswld_xml_file']);
 			$sswld_random = stripslashes($_POST['sswld_random']);		
 			$sswld_title = stripslashes($_POST['sswld_title']);
-			$sswld_dir = stripslashes($_POST['sswld_dir']);
+			//$sswld_dir = stripslashes($_POST['sswld_dir']);
 			$sswld_width = stripslashes($_POST['sswld_width']);
 			$sswld_height = stripslashes($_POST['sswld_height']);
 			$sswld_pause = stripslashes($_POST['sswld_pause']);
@@ -217,7 +224,7 @@ function sswld_admin_option()
 			update_option('sswld_xml_file', $sswld_xml_file );
 			update_option('sswld_random', $sswld_random );
 			update_option('sswld_title', $sswld_title );
-			update_option('sswld_dir', $sswld_dir );
+			//update_option('sswld_dir', $sswld_dir );
 			update_option('sswld_width', $sswld_width );
 			update_option('sswld_height', $sswld_height );
 			update_option('sswld_pause', $sswld_pause );
@@ -227,93 +234,95 @@ function sswld_admin_option()
 			
 			?>
 			<div class="updated fade">
-				<p><strong>Details successfully updated.</strong></p>
+				<p><strong><?php _e('Details successfully updated.', 'superb-slideshow'); ?></strong></p>
 			</div>
 			<?php
 		}
 		?>
-		<h3>Plugin setting</h3>
+		<h3><?php _e('Plugin setting', 'superb-slideshow'); ?></h3>
 		<form name="sswld_form" method="post" action="#">
 		
-			<label for="tag-title">XML File (Only for widget)</label>
+			<label for="tag-title"><?php _e('XML File (Only for widget)', 'superb-slideshow'); ?></label>
 			<input name="sswld_xml_file" type="text" value="<?php echo $sswld_xml_file; ?>"  id="sswld_xml_file" size="70" maxlength="200">
-			<p>Please enter your slideshow XML filename.</p>
+			<p><?php _e('Please enter your slideshow XML filename.', 'superb-slideshow'); ?></p>
 			
-			<label for="tag-title">Random</label>
+			<label for="tag-title"><?php _e('Random', 'superb-slideshow'); ?></label>
 			<select name="sswld_random" id="sswld_random">
 				<option value='Y' <?php if($sswld_random == 'Y') { echo "selected='selected'" ; } ?>>Yes</option>
 				<option value='N' <?php if($sswld_random == 'N') { echo "selected='selected'" ; } ?>>No</option>
 			</select>
-			<p>Please select random display option.</p>
+			<p><?php _e('Please select random display option.', 'superb-slideshow'); ?></p>
 			
-			<label for="tag-title">Title (Only for widget)</label>
+			<label for="tag-title"><?php _e('Title (Only for widget)', 'superb-slideshow'); ?></label>
 			<input name="sswld_title" type="text" value="<?php echo $sswld_title; ?>"  id="sswld_title" size="70" maxlength="200">
-			<p>Please enter widget title. </p>
+			<p><?php _e('Please enter widget title.', 'superb-slideshow'); ?></p>
 			
-			<label for="tag-title">Width (Only for widget)</label>
+			<label for="tag-title"><?php _e('Width (Only for widget)', 'superb-slideshow'); ?></label>
 			<input name="sswld_width" type="text" value="<?php echo $sswld_width; ?>"  id="sswld_width" maxlength="4">
-			<p>Please enter your slideshow width. This is only for widget option. (Example: 175) </p>
+			<p><?php _e('Please enter your slideshow width. This is only for widget option.', 'superb-slideshow'); ?> (Example: 175) </p>
 			
-			<label for="tag-title">Height (Only for widget)</label>
+			<label for="tag-title"><?php _e('Height (Only for widget)', 'superb-slideshow'); ?></label>
 			<input name="sswld_height" type="text" value="<?php echo $sswld_height; ?>"  id="sswld_height" maxlength="4">
-			<p>Please enter your slideshow height. This is only for widget option. (Example: 150) </p>
+			<p><?php _e('Please enter your slideshow height. This is only for widget option.', 'superb-slideshow'); ?> (Example: 150) </p>
 			
-			<label for="tag-title">Pause</label>
+			<label for="tag-title"><?php _e('Pause', 'superb-slideshow'); ?></label>
 			<input name="sswld_pause" type="text" value="<?php echo $sswld_pause; ?>"  id="sswld_pause" maxlength="6">
-			<p>Please enter pause between slides. (Example: 2500)</p>
+			<p><?php _e('Please enter pause between slides.', 'superb-slideshow'); ?> (Example: 2500)</p>
 			
-			<label for="tag-title">Fade duration</label>
+			<label for="tag-title"><?php _e('Fade duration', 'superb-slideshow'); ?></label>
 			<input name="sswld_duration" type="text" value="<?php echo $sswld_duration; ?>"  id="sswld_duration" maxlength="6">
-			<p>Please enter your fade duration. The duration of the fade effect when transitioning from one image to the next, in milliseconds. (Example: 500)</p>
+			<p><?php _e('Please enter your fade duration. The duration of the fade effect when transitioning from one image to the next, in milliseconds.', 'superb-slideshow'); ?> (Example: 500)</p>
 			
-			<label for="tag-title">Cycles</label>
+			<label for="tag-title"><?php _e('Cycles', 'superb-slideshow'); ?></label>
 			<input name="sswld_cycles" type="text" value="<?php echo $sswld_cycles; ?>"  id="sswld_cycles" maxlength="1">
-			<p>The cycles option when set to 0 will cause the slideshow to rotate perpetually, <br />While any number larger than 0 means it will stop after N cycles. (Example: 0)</p>
+			<p><?php _e('The cycles option when set to 0 will cause the slideshow to rotate perpetually, <br />While any number larger than 0 means it will stop after N cycles.', 'superb-slideshow'); ?> (Example: 0)</p>
 			
-			<label for="tag-title">Display description</label>
+			<label for="tag-title"><?php _e('Display description', 'superb-slideshow'); ?></label>
 			<select name="sswld_displaydesc" id="sswld_displaydesc">
 				<option value='ondemand' <?php if($sswld_displaydesc == 'ondemand') { echo "selected='selected'" ; } ?>>On Demand</option>
 				<option value='always' <?php if($sswld_displaydesc == 'always') { echo "selected='selected'" ; } ?>>Always</option>
 			</select>
-			<p>On Demand = Show description when the user mouses over the slideshow. <br />Always = Always show description panel at the foot of the slideshow.</p>
+			<p><?php _e('On Demand = Show description when the user mouses over the slideshow. <br />Always = Always show description panel at the foot of the slideshow.', 'superb-slideshow'); ?></p>
 		
 			<div style="height:10px;"></div>
 			<input type="hidden" name="sswld_form_submit" value="yes"/>
-			<input name="sswld_submit" id="sswld_submit" class="button" value="Submit" type="submit" />
-			<a class="button" target="_blank" href="http://www.gopiplus.com/work/2010/07/18/superb-slideshow/">Help</a>
+			<input name="sswld_submit" id="sswld_submit" class="button" value="<?php _e('Submit', 'superb-slideshow'); ?>" type="submit" />
+			<a class="button" target="_blank" href="http://www.gopiplus.com/work/2010/07/18/superb-slideshow/"><?php _e('Help', 'superb-slideshow'); ?></a>
 			<?php wp_nonce_field('sswld_form_setting'); ?>
 		</form>
 		</div>
-		<h3>Plugin configuration option</h3>
+		<h3><?php _e('Plugin configuration option', 'superb-slideshow'); ?></h3>
 		<ol>
-			<li>Drag and drop the widget to your sidebar.</li>
-			<li>Add directly in to the theme using PHP code.</li>
-			<li>Add the plugin in the posts or pages using short code.</li>
+			<li><?php _e('Drag and drop the widget to your sidebar.', 'superb-slideshow'); ?></li>
+			<li><?php _e('Add directly in to the theme using PHP code.', 'superb-slideshow'); ?></li>
+			<li><?php _e('Add the plugin in the posts or pages using short code.', 'superb-slideshow'); ?></li>
 		</ol>
-	<p class="description">Check official website for more information <a target="_blank" href="http://www.gopiplus.com/work/2010/07/18/superb-slideshow/">click here</a></p>
+	<p class="description"><?php _e('Check official website for more information', 'superb-slideshow'); ?> 
+	<a target="_blank" href="http://www.gopiplus.com/work/2010/07/18/superb-slideshow/"><?php _e('click here', 'superb-slideshow'); ?></a></p>
 	</div>
 	<?php
 }
 
 function sswld_control()
 {
-	echo '<p>Superb Slideshow.<br> To change the setting goto Superb Slideshow link under Setting menu.';
-	echo ' <a href="options-general.php?page=superb-slideshow">';
-	echo 'click here</a></p>';
+	echo '<p><b>';
+	_e('Superb Slideshow', 'superb-slideshow');
+	echo '.</b> ';
+	_e('Check official website for more information', 'superb-slideshow');
+	?> <a target="_blank" href="http://www.gopiplus.com/work/2010/07/18/superb-slideshow/"><?php _e('click here', 'superb-slideshow'); ?></a></p><?php
 }
 
 function sswld_widget_init() 
 {
 	if(function_exists('wp_register_sidebar_widget')) 	
 	{
-		wp_register_sidebar_widget('Superb Slideshow', 'Superb Slideshow', 'sswld_widget');
+		wp_register_sidebar_widget( __('Superb Slideshow', 'superb-slideshow'), __('Superb Slideshow', 'superb-slideshow'), 'sswld_widget');
 	}
 	if(function_exists('wp_register_widget_control')) 	
 	{
-		wp_register_widget_control('Superb Slideshow', array('Superb Slideshow', 'widgets'), 'sswld_control');
+		wp_register_widget_control( __('Superb Slideshow', 'superb-slideshow'), array( __('Superb Slideshow', 'superb-slideshow'), 'widgets'), 'sswld_control');
 	} 
 }
-
 
 function sswld_deactivation() 
 {
@@ -331,7 +340,7 @@ function sswld_deactivation()
 
 function sswld_add_to_menu() 
 {
-	add_options_page('Superb Slideshow','Superb Slideshow','manage_options', 'superb-slideshow','sswld_admin_option');  
+	add_options_page( __('Superb Slideshow', 'superb-slideshow'), __('Superb Slideshow', 'superb-slideshow'),'manage_options', 'superb-slideshow','sswld_admin_option');  
 }
 
 if (is_admin()) 
@@ -348,6 +357,12 @@ function sswld_add_javascript_files()
 	}
 }    
  
+function sswld_textdomain() 
+{
+	  load_plugin_textdomain( 'superb-slideshow', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+}
+
+add_action('plugins_loaded', 'sswld_textdomain');
 add_action('init', 'sswld_add_javascript_files');
 add_action("plugins_loaded", "sswld_widget_init");
 register_activation_hook(__FILE__, 'sswld_install');

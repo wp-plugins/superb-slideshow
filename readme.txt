@@ -5,8 +5,8 @@ Author URI: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Plugin URI: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Tags: Superb, Slideshow
 Requires at least: 3.4
-Tested up to: 3.6
-Stable tag: 10.1
+Tested up to: 3.8
+Stable tag: 10.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	
@@ -82,17 +82,22 @@ widget to your desired location in the active sidebar or use mentioned code in t
 **Not able to see close and open description image in slide show?**  
 **All your question & suggestion go to moreinfo page?**  	
 	
-
 Click the below link to see answer for all questions!			
 More info : [click to go](http://www.gopiplus.com/work/2010/07/18/superb-slideshow/)
 
 == Screenshots ==
 
-1. Front page screen see the carousel effects in live demo link http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
+1. Front page screen. http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 
-2. Admin setting screen http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
+2. Admin page screen. http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 
 == Upgrade Notice ==
+
+= 10.2 =
+
+1. Tested up to 3.8
+2. Now this plugin supports localization (or internationalization). i.e. option to translate into other languages. 
+Plugin *.po file (superb-slideshow.po) available in the languages folder.	
 
 = 10.1 =	
 
@@ -141,6 +146,12 @@ Create the new XML file in plugin directry, and use mentioned code.
 first version
 
 == Changelog ==
+
+= 10.2 =
+
+1. Tested up to 3.8
+2. Now this plugin supports localization (or internationalization). i.e. option to translate into other languages. 
+Plugin *.po file (superb-slideshow.po) available in the languages folder.	
 
 = 10.1 =	
 

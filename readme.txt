@@ -5,8 +5,8 @@ Author URI: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Plugin URI: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Tags: Superb, Slideshow
 Requires at least: 3.4
-Tested up to: 3.8
-Stable tag: 10.2
+Tested up to: 3.9
+Stable tag: 10.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	
@@ -93,6 +93,10 @@ More info : [click to go](http://www.gopiplus.com/work/2010/07/18/superb-slidesh
 
 == Upgrade Notice ==
 
+= 10.3 =
+
+1. Tested up to 3.9
+
 = 10.2 =
 
 1. Tested up to 3.8
@@ -104,48 +108,64 @@ Plugin *.po file (superb-slideshow.po) available in the languages folder.
 Minor change in the admin layout.
 
 = 10.0 =
+
 Tested up to 3.6
 
 = 9.2 =
+
 Tested up to 3.5
 Avoid registering the alternate jQuery.
 From this version we are using existing wordpress jQuery.
 
 = 9.1 =
+
 Tested up to 3.4.2
 
 = 9.0 =
+
 New demo link, www.gopiplus.com
 
 = 8.0 =
+
 Tested up to 3.4
 
 = 7.0 =
+
 Tested up to 3.3
 Js file has been included as per wp standard.
 
 = 6.0 =
+
 Tested up to 3.2.1
 Only admin user can see the plugin link in admin.
 
 = 5.0 =
+
 Tested upto 3.0.1
 
 = 4.0 =
+
 Now random display option added	
 Tested up to: 2.9
 
 = 3.0 =
+
 Tested with WP version 2.8.6	
 
 = 2.0 =
+
 Now create new gallery in post or page.
 Create the new XML file in plugin directry, and use mentioned code.
 
 = 1.0 =	
+
 first version
 
 == Changelog ==
+
+= 10.3 =
+
+1. Tested up to 3.9
 
 = 10.2 =
 
@@ -158,43 +178,55 @@ Plugin *.po file (superb-slideshow.po) available in the languages folder.
 Minor change in the admin layout.
 
 = 10.0 =
+
 Tested up to 3.6
 
 = 9.2 =
+
 Tested up to 3.5
 Avoid registering the alternate jQuery.
 From this version we are using existing wordpress jQuery.
 
 = 9.1 =
+
 Tested up to 3.4.2
 
 = 9.0 =
+
 New demo link, www.gopiplus.com
 
 = 8.0 =
+
 Tested up to 3.4
 
 = 7.0 =
+
 Tested up to 3.3
 Js file has been included as per wp standard.
 
 = 6.0 =
+
 Tested up to 3.2.1
 Only admin user can see the plugin link in admin.
 
 = 5.0 =
+
 Tested up to 3.0.1
 
 = 4.0 =
+
 Now random display option added	
 Tested up to 2.9
 
 = 3.0 =
+
 Tested with WP version 2.8.6	
 
 = 2.0 =
+
 Now create new gallery in post or page.
 Create the new XML file in plugin directry, and use mentioned code.
 
 = 1.0 =	
+
 first version

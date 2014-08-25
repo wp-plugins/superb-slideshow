@@ -5,8 +5,8 @@ Author URI: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Plugin URI: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Tags: Superb, Slideshow
 Requires at least: 3.4
-Tested up to: 3.9
-Stable tag: 10.3
+Tested up to: 4.0
+Stable tag: 10.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	
@@ -55,11 +55,11 @@ We can use this plug-in in different way.
 1. Go to widget menu and drag and drop the "Superb Slideshow" widget to your sidebar location. or 	
 2. Copy and past the below mentioned code to your desired template location. 	
 
-<code><?php if (function_exists (sswld_show)) sswld_show(); ?></code>
+`<?php if (function_exists (sswld_show)) sswld_show(); ?>`
 
 3. Use the below code to the page or post
 	
-More info : [click to go](http://www.gopiplus.com/work/2010/07/18/superb-slideshow/)
+`[superb-slideshow filename="page1.xml" width="400" height="300"]`
 	
 == Installation ==	
 
@@ -70,20 +70,18 @@ More info : [click to go](http://www.gopiplus.com/work/2010/07/18/superb-slidesh
 *   In word press administration panels, click on plug-in from the menu.    
 *   You should see your new 'Superb Slideshow' plug-in listed under Inactive plug-in tab.    
 *   To turn the word presses plug-in on, click activate.    
-*   Go to widget link under Appearance tab, Drag & drop 'Superb Slideshow' 
-widget to your desired location in the active sidebar or use mentioned code in the desired template location.     
+*   Go to widget link under Appearance tab, Drag & drop 'Superb Slideshow' widget to your desired location in the active sidebar or use mentioned code in the desired template location.     
 
 == Frequently Asked Questions ==
 
-**How to arrange the width & height of the slideshow?**  	
-**How to change the slide Fade Duration, Pause, Cycles?**  	
-**How to add more image?**  
-**How to edit imags & desctiption?**  
-**Not able to see close and open description image in slide show?**  
-**All your question & suggestion go to moreinfo page?**  	
-	
-Click the below link to see answer for all questions!			
-More info : [click to go](http://www.gopiplus.com/work/2010/07/18/superb-slideshow/)
+*   Q1. How to arrange the width & height of the slideshow?
+*   Q2. How to change the slide Fade Duration, Pause, Cycles?
+*   Q3. How to add more image?
+*   Q4. How to edit imags & desctiption?
+*   Q5. Not able to see close and open description image in slide show?
+*   Q6. All your question & suggestion go to moreinfo page?
+			
+[Answer](http://www.gopiplus.com/work/2010/07/18/superb-slideshow/)
 
 == Screenshots ==
 
@@ -92,6 +90,10 @@ More info : [click to go](http://www.gopiplus.com/work/2010/07/18/superb-slidesh
 2. Admin page screen. http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 
 == Upgrade Notice ==
+
+= 10.4 =
+
+1. Tested up to 4.0
 
 = 10.3 =
 
@@ -162,6 +164,10 @@ Create the new XML file in plugin directry, and use mentioned code.
 first version
 
 == Changelog ==
+
+= 10.4 =
+
+1. Tested up to 4.0
 
 = 10.3 =
 

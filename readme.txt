@@ -5,8 +5,8 @@ Author URI: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Plugin URI: http://www.gopiplus.com/work/2010/07/18/superb-slideshow/
 Tags: Superb, Slideshow
 Requires at least: 3.4
-Tested up to: 4.1
-Stable tag: 10.5
+Tested up to: 4.2.2
+Stable tag: 10.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	
@@ -91,6 +91,10 @@ We can use this plug-in in different way.
 
 == Upgrade Notice ==
 
+= 10.6 =
+
+1. Tested up to 4.2.2
+
 = 10.5 =
 
 1. Tested up to 4.1
@@ -168,6 +172,10 @@ Create the new XML file in plugin directry, and use mentioned code.
 first version
 
 == Changelog ==
+
+= 10.6 =
+
+1. Tested up to 4.2.2
 
 = 10.5 =
 
